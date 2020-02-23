@@ -1,0 +1,500 @@
+/* @licstart
+            ####    SZ Booklet - jQuery Plugin v1.0    ####
+            ####        Created by Serving Zion        ####
+
+            There is no Copyright claimed against this file.
+               Be free to use it as if you had made it!
+
+    ##        God did not send His son to condemn the world,       ##
+    ##          rather that through Him it might be saved.         ##
+    ##   Get the facts: http://www.adonai-reigns.life/the-gospel   ##
+@licend */
+
+/*------------------------------------*\
+    RESET
+\*------------------------------------*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+    v2.0b1 | 201101 
+    NOTE:WORK IN PROGRESS
+    USE WITH CAUTION AND TEST WITH ABANDON */
+
+.ar-booklet-wrapper html, .ar-booklet-wrapper body, .ar-booklet-wrapper div, .ar-booklet-wrapper span, .ar-booklet-wrapper applet, .ar-booklet-wrapper object, .ar-booklet-wrapper iframe, .ar-booklet-wrapper 
+h1, .ar-booklet-wrapper h2, .ar-booklet-wrapper h3, .ar-booklet-wrapper h4, .ar-booklet-wrapper h5, .ar-booklet-wrapper h6, .ar-booklet-wrapper p, .ar-booklet-wrapper blockquote, .ar-booklet-wrapper pre, .ar-booklet-wrapper 
+a, .ar-booklet-wrapper abbr, .ar-booklet-wrapper acronym, .ar-booklet-wrapper address, .ar-booklet-wrapper big, .ar-booklet-wrapper cite, .ar-booklet-wrapper code, .ar-booklet-wrapper 
+del, .ar-booklet-wrapper dfn, .ar-booklet-wrapper em, .ar-booklet-wrapper img, .ar-booklet-wrapper ins, .ar-booklet-wrapper kbd, .ar-booklet-wrapper q, .ar-booklet-wrapper s, .ar-booklet-wrapper samp, .ar-booklet-wrapper 
+small, .ar-booklet-wrapper strike, .ar-booklet-wrapper strong, .ar-booklet-wrapper sub, .ar-booklet-wrapper sup, .ar-booklet-wrapper tt, .ar-booklet-wrapper var, .ar-booklet-wrapper 
+b, .ar-booklet-wrapper u, .ar-booklet-wrapper i, .ar-booklet-wrapper center, .ar-booklet-wrapper 
+dl, .ar-booklet-wrapper dt, .ar-booklet-wrapper dd, .ar-booklet-wrapper ol, .ar-booklet-wrapper ul, .ar-booklet-wrapper li, .ar-booklet-wrapper 
+fieldset, .ar-booklet-wrapper form, .ar-booklet-wrapper label, .ar-booklet-wrapper legend, .ar-booklet-wrapper 
+table, .ar-booklet-wrapper caption, .ar-booklet-wrapper tbody, .ar-booklet-wrapper tfoot, .ar-booklet-wrapper thead, .ar-booklet-wrapper tr, .ar-booklet-wrapper th, .ar-booklet-wrapper td, .ar-booklet-wrapper 
+article, .ar-booklet-wrapper aside, .ar-booklet-wrapper canvas, .ar-booklet-wrapper details, .ar-booklet-wrapper figcaption, .ar-booklet-wrapper figure, .ar-booklet-wrapper 
+footer, .ar-booklet-wrapper header, .ar-booklet-wrapper hgroup, .ar-booklet-wrapper menu, .ar-booklet-wrapper nav, .ar-booklet-wrapper section, .ar-booklet-wrapper summary, .ar-booklet-wrapper 
+time, .ar-booklet-wrapper mark, .ar-booklet-wrapper audio, .ar-booklet-wrapper video{
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    font:inherit;
+    vertical-align:baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+.ar-booklet-wrapper article, .ar-booklet-wrapper aside, .ar-booklet-wrapper details, .ar-booklet-wrapper figcaption, .ar-booklet-wrapper figure, .ar-booklet-wrapper 
+footer, .ar-booklet-wrapper header, .ar-booklet-wrapper hgroup, .ar-booklet-wrapper menu, .ar-booklet-wrapper nav, .ar-booklet-wrapper section{
+    display:block;
+}
+body{
+    line-height:1;
+}
+.ar-booklet-wrapper ol, .ar-booklet-wrapper ul{
+    list-style:none;
+}
+.ar-booklet-wrapper blockquote, .ar-booklet-wrapper q{
+    quotes:none;
+}
+.ar-booklet-wrapper blockquote:before, .ar-booklet-wrapper blockquote:after,
+.ar-booklet-wrapper q:before, .ar-booklet-wrapper q:after{
+    content:’’;
+    content:none;
+}
+/* remember to define visible focus styles! 
+:focus{
+    outline:?????;
+} */
+
+/* remember to highlight inserts somehow! */
+.ar-booklet-wrapper ins{
+    text-decoration:none;
+}
+.ar-booklet-wrapper del{
+    text-decoration:line-through;
+}
+
+.ar-booklet-wrapper table{
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+
+
+
+
+/*------------------------------------*\
+    $MAIN
+\*------------------------------------*/
+/* GO! */
+
+
+
+.ar-booklet-wrapper{
+    text-align: center;width: 100%; position: absolute; top: 0; left: 0;
+}
+
+
+.ar-booklet{
+    position: relative;
+    margin: auto !important;
+}
+
+.ar-booklet .shunt{
+    position: absolute;
+    top: 40%;
+    height: 20%;
+    background: rgba(190, 190, 190, 0.6);
+    z-index: 199;
+    display: none;
+    border: solid 1px rgba(21,21,119,1);
+}
+.ar-booklet .shunt:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.ar-booklet .shunt.left{
+    left: 0;
+    border-radius: 0 30px 30px 0;
+    border-left: none;
+}
+.ar-booklet .shunt.right{
+    right: 0;
+    border-radius: 30px 0 0 30px;
+    border-right: none;
+}
+
+
+.ar-booklet .shunt .btn,
+.ar-booklet .nav .btn{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: gray;
+    border-radius: 50%;
+    color: rgba(21,21,119,1);
+    vertical-align: middle;
+    margin: 0 10px;
+    cursor: pointer;
+    
+    font-size: 30px; text-align: center; font-weight: bold; border: solid 1px rgba(21,21,119,1);
+}
+
+.ar-booklet .shunt.left .btn{
+    
+}
+
+.ar-booklet .shunt.right .btn{
+    
+}
+
+.ar-booklet .nav{
+    
+    visibility: hidden; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: rgba(190, 190, 190, 1); z-index: 200;
+    
+}
+
+.ar-booklet .nav .prev{
+    position: absolute; left: 20px; top: 20px; 
+}
+
+
+.ar-booklet .nav .next{
+    cursor: pointer; position: absolute; right: 20px; top: 20px;
+}
+
+.ar-booklet .nav .page-number{
+    cursor: pointer; position: absolute; left: 30%; top: 20px; width: 40%; height: 40px; border-radius: 20px; font-size: 30px; line-height: 40px; text-align: center; font-weight: bold; background: whitesmoke; color: rgba(21,21,119,1); border: solid 2px gray;
+}
+.ar-booklet .nav .menu-button{
+    cursor: pointer; position: absolute; left: 30%; top: 20px; width: 40%; height: 40px; border-radius: 20px; font-size: 30px; line-height: 40px; text-align: center; 
+    background: whitesmoke; border: solid 2px gray;
+}
+
+.ar-booklet .nav .menu-button p{
+    line-height: 18px;
+    margin: 2px 0 0 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-weight: normal; font-size: 10px; color: #999;
+    font-family: monospace;
+}
+
+
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #999;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+
+
+
+.ar-booklet .toc{
+    padding-top: 110px; z-index: 200; position: absolute; bottom: 60px; left: 2%; width: 96%; display: none; max-height: 400px; font-size: 26px; font-weight: bold; color: gray; text-transform: capitalize; background: rgba(190, 190, 190, 1); border-bottom: solid 20px rgba(190, 190, 190, 0); border-radius: 5px 5px 0 0;
+}
+
+.ar-booklet .toc .site-name{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 70px;
+    line-height: 70px;
+    min-width: 100%;
+    font-size: 40px;
+    text-align: left;
+    margin: 0;
+    border-bottom: dotted 2px gray; 
+    padding-left: 20px;
+}
+
+.ar-booklet .toc .site-name a{
+    position: relative; height: 70px; white-space: nowrap; text-decoration: none; box-shadow: none;
+}
+
+.ar-booklet .toc .site-name a img{
+    display: inline-block;
+}
+
+.ar-booklet .toc .site-name:hover a{
+    background: lightsteelblue;
+}
+
+.ar-booklet .toc .action-bar{
+    height: 40px; margin: 0; padding: 0; 
+    position: absolute; top: 70px; left: 0; border-bottom: dotted 2px gray; width: 100%; display: block;
+    text-align: left;
+}
+
+.ar-booklet .toc .action-bar ul{
+    margin: 0;
+    padding: 0 20px;
+    list-style-type: none;
+}
+.ar-booklet .toc .action-bar ul li{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+}
+
+.ar-booklet .toc .action-bar ul li.toggle-transcript{
+    padding-right: 5px;
+    border-right: dashed 2px gray;
+}
+
+.ar-booklet .toc .action-bar ul li a.icon{
+    line-height: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50% 50%;
+    
+}
+
+.ar-booklet .toc .action-bar ul li.toggle-transcript a.icon{
+    background: #FFFFFF;
+    height: 25px;
+    width: 25px;
+    padding: 2px;
+    margin: -1px 2px 5px 2px;
+    border: solid 1px #8C8C8C;
+}
+
+.ar-booklet .toc .action-bar ul li img{
+    height: 20px; width: 20px;
+    margin: auto;
+}
+
+.ar-booklet .toc .action-bar ul li.toggle-transcript a.icon img{
+    width: 16px; height: 16px; margin: 2px 0 0 2px;
+}
+
+.ar-booklet .toc .action-bar ul li.toggle-transcript a.icon:hover{
+    position: relative;
+    top: -4px;
+}
+
+.ar-booklet .toc .action-bar ul li.translate #ytWidget{
+    margin-top: -5px;   
+}
+.ar-booklet .toc .action-bar ul li.translate #ytWidget .yt-wrapper.yt-wrapper_align_right{
+    position: absolute;
+    left: 242px;
+    top: 20px;
+}
+
+.ar-booklet .toc .action-bar ul li.translate #yt-widget .yt-listbox__col{
+    float: left;
+    clear: left;
+    height: auto !important;
+}
+
+.ar-booklet .toc ol{
+    overflow-y: scroll; 
+    max-height: 290px; 
+    list-style-position: inside;
+    margin: 0;
+}
+
+.ar-booklet .toc ol li{
+    text-align : left;
+    cursor: pointer;
+    border-bottom: dashed 2px gray;
+    line-height: 2;
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+.ar-booklet .toc ol li:hover{
+    background: lightsteelblue;
+}
+
+.ar-booklet-nojs .transcript{
+    max-width: 800px;
+    margin: auto;
+    width: 50%;
+}
+
+.ar-booklet-nojs .page{
+    display: none;
+}
+
+.ar-booklet-nojs .page .transcripts,
+.ar-booklet-nojs .page .image{
+    float: none;
+    clear: both;
+    width: 761px;
+    height: 536px;
+    margin: 10% auto;
+    position: absolute;
+}
+
+.ar-booklet-nojs .transcript > p{
+    margin: 0 5%;
+}
+
+.ar-booklet-live .transcript > p{
+    margin: 0 5%;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.8);
+}
+.ar-booklet-live .transcript > blockquote{
+    font-size: 16px;
+    padding: 0;
+    border-color: #002b80;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.ar-booklet-live .transcript > blockquote footer{
+    margin:  0 14px 10px 0;
+}
+
+.ar-booklet-live .transcript > blockquote p{
+    margin: 0;
+}
+
+.ar-booklet-live .transcript > dl{
+    margin: 5%;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.8);
+}
+.ar-booklet-live .transcript > dl dt{
+    text-align: left;
+    font-size: 22px;
+    font-weight: bold;
+}
+.ar-booklet-live .transcript > dl dd{
+    text-align: left;
+}
+
+.ar-booklet-nojs .page{
+    clear: both;
+    margin-bottom: 10%;
+    border-top: solid 1px black;
+}
+
+body.phone .ar-tooltip-content h2{
+    font-size: 16px;
+}
+body.phone .ar-tooltip-content h2 .translation-picker{
+    font-size: 12px;
+}
+
+body.phone .ar-tooltip-content .verse{
+    font-size: 16px;
+}
+
+
+.ar-booklet-live h2.page-title,
+.ar-booklet-live .transcript{
+    display: none;
+}
+
+.ar-booklet-live.view-transcript h2.page-title,
+.ar-booklet-live.view-transcript .transcript{
+    display: block;
+}
+
+.ar-booklet-live.view-transcript .image{
+    opacity: 0 !important;
+}
+
+.ar-booklet-live h2.page-title{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5%;
+    margin: 0;
+    text-align: center;
+}
+
+.ar-booklet-live .transcript{
+    position: absolute;
+    top: 0;
+    margin-top: 5%;
+    left: 0;
+    height: 90%;
+    z-index: 5;
+    width:100%;
+    overflow-y: scroll;
+}
+
+.ar-booklet-live .transcript.right{
+    left: auto;
+    right: 0;
+}
+
+.ar-booklet-live .transcript p{
+    background: #CCCCCC;
+    color: #333333;
+}
+
+.ar-booklet .transcript .reference{
+    /*display: none;*/
+    font-size: 13px;
+    font-variant-position: super;
+}
+
+
+
+
+
+
+
+
+
+
+
