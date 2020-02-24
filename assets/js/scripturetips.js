@@ -25,6 +25,15 @@ var Scripturetips = {
       
       var tipContent = $('#'+$(e.target).data('tooltipId'));
       
+      // turn the notes into tooltips
+      var notes = $('.st-note', tipContent);
+      
+      for(var i=0; i<notes.length; i++){
+        var note = notes[i];
+        $(note).prop('title', $(note).text());
+        $(note).text('*');
+      }
+      
       tipContent.fadeIn().css({
         width: '300px',
         height: '180px',
