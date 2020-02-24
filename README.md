@@ -2,6 +2,8 @@
 
 A Wordpress plugin to enhance websites that reference bible quotes often.
 
+[Download the latest version: 1.0.1](https://static.adonai-reigns.life/wp/adonai-reigns.life-1.0.1.zip). (Released 2020-02-24, 24MB .zip).
+
 It scans each content block, looking for patterns that look like bible references, then converts those references into links, making a tooltip appear when the mouse hovers the link.
 
 Clicking the link takes the user to read more at www.biblegateway.com.
