@@ -177,7 +177,7 @@ if(!class_exists('Adonai_Reigns_Life')){
 		
 // CSS close button by Maneesh, downloaded 20200224 from https://codepen.io/maneeshc/pen/pPxKQm
 		$tipContent .= <<<HTML
-<h2 class="st-title">{$scripture_tip['pattern']} {$scripture_tip['version']})			
+<h2 class="st-title">{$scripture_tip['pattern']} ({$scripture_tip['version']})			
 <div class="st-close-button-wrapper">
   <a href="#" class="st-close-button">
     <div class="st-in">
