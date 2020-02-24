@@ -24,11 +24,13 @@ var Scripturetips = {
       
       for(var i=0; i<notes.length; i++){
         var note = notes[i];
-        $(note).prop('title', $(note).text());
-        $(note).text('*');
-        $(note).click(function(){
-          alert($(this).prop('title'));
-        });
+        if($(note).text() !== '*'){
+          $(note).prop('title', $(note).text());
+          $(note).text('*');
+          $(note).click(function(){
+            alert($(this).prop('title'));
+          });
+        }
       }
       
       var tipContentLeftPos = $(e.target).offset().left;
