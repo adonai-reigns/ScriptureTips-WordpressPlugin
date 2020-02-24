@@ -21,7 +21,7 @@
 
 .scripturetips-content .st-inner-content{
     padding: 8px;
-    line-height: 1;
+    line-height: 1.2;
 }
 
 .scripturetips-content h2.st-title{
@@ -38,12 +38,24 @@
 }
 
 .scripturetips-content .st-verse-number{
-    font-size: 0.8em;
-    vertical-align: super;
+    font-size: 0.7em;
+    position: relative;
+    top: -0.4em;
+    padding-right: 0.1em;
+    color: darkcyan;
+    font-weight: bold;
+    opacity: 0.6;
 }
 
 .scripturetips-content .st-note{
-    padding-right: 0.3em;
+    padding-right: 0.3em;   
+}
+
+.scripturetips-content .st-supplied:after,
+.scripturetips-content .st-note,
+.scripturetips-content .st-idiom
+{
+    content: ' ';
 }
 
 .scripturetips-content .st-footer{
