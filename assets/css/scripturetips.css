@@ -41,7 +41,7 @@
     font-size: 0.7em;
     position: relative;
     top: -0.4em;
-    padding-right: 0.1em;
+    padding: 0 0.1em 0 0.3em;
     color: darkcyan;
     font-weight: bold;
     opacity: 0.6;
@@ -51,9 +51,14 @@
     padding-right: 0.3em;   
 }
 
+.scripturetips-content .st-verse-number:before
+{
+    content: ' ';
+}
+
 .scripturetips-content .st-supplied:after,
-.scripturetips-content .st-note,
-.scripturetips-content .st-idiom
+.scripturetips-content .st-note:after,
+.scripturetips-content .st-idiom:after
 {
     content: ' ';
 }

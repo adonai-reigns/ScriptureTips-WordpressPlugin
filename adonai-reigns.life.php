@@ -176,8 +176,8 @@ if(!class_exists('Adonai_Reigns_Life')){
 		$tipContent = '<div id="st_'.md5($scripture_tip['pattern']).'" class="scripturetips-content">';
 		$tipContent .= '<h2 class="st-title">'.$scripture_tip['pattern'].' ('.$scripture_tip['version'].')</h2>';
 		$tipContent .= '<div class="st-inner-content">';
-		foreach($scripture_tip['rows'] as $row){
-		    if($row->verse>1){
+		foreach($scripture_tip['rows'] as $rowCount=>$row){
+		    if($row->verse>1 && $rowCount>0){
 			$tipContent .= '<span class="st-verse"><span class="st-verse-number">'.$row->verse.'</span>';
 		    }
 		    
