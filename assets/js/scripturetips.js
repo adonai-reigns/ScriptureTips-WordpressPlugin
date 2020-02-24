@@ -12,7 +12,7 @@ var Scripturetips = {
   currentMousePos : {x:0,y:0},
 
   run : function(){
-    $('p').delegate('.scripturetips-tip', 'mouseenter mouseleave', Scripturetips.triggerTip);
+    $('body').delegate('.scripturetips-tip', 'mouseenter mouseleave', Scripturetips.triggerTip);
     $(document).mousemove(Scripturetips.mousemove);
   },
   
