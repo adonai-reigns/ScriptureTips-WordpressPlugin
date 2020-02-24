@@ -9,7 +9,7 @@
 Plugin Name: Adonai Reigns 
 Plugin URI: https://www.adonai-reigns.life/tools/wordpress
 Description: Convert Bible References into tooltips :) .. (Includes a shortcode <strong>[the_gospel_booklet]</strong> to share the gospel on your website!).
-Version: 1.0.0
+Version: 1.0.1
 Author: Serving Zion
 Author URI: http://www.adonai-reigns.life
 License: GPLv2 or later
