@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 
 var $ = jQuery;
 var Scripturetips = {
@@ -70,6 +64,12 @@ var Scripturetips = {
       tipContent.css({
         minWidth: newWidth+'px',
         width: newWidth+'px'
+      });
+      
+      $('.st-close-button', tipContent).click(function(e2){
+        e2.stopPropagation();
+        e2.preventDefault();
+        $(tipContent).fadeOut();
       });
       
       Scripturetips.currentTip[$(e.target).data('tooltipId')] = e.target;

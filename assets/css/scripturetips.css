@@ -32,6 +32,102 @@
     background: #FAFAFA;
 }
 
+
+/* CSS close button by Maneesh, downloaded 20200224 from https://codepen.io/maneeshc/pen/pPxKQm */
+.st-close-button-wrapper {
+  width: 28px;
+  height: 26px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  background: gray;
+  border-radius: 6px;
+}
+
+.st-close-button {
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+}
+.st-close-button > div {
+  position: relative;
+}
+.st-close-button-block {
+  width: 30px;
+  height: 15px;
+  position: relative;
+  overflow: hidden;
+}
+.st-close-button-block:before, .st-close-button-block:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: calc(55% - 4px);
+  display: block;
+  width: 4px;
+  height: 20px;
+  -webkit-transform-origin: bottom center;
+          transform-origin: bottom center;
+  background: white;
+  -webkit-transition: all ease-out 280ms;
+  transition: all ease-out 280ms;
+}
+.st-close-button-block:last-of-type {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+.st-close-button .st-in .st-close-button-block:before {
+  -webkit-transition-delay: 280ms;
+          transition-delay: 280ms;
+  -webkit-transform: translateX(15px) translateY(-15px) rotate(45deg);
+          transform: translateX(15px) translateY(-15px) rotate(45deg);
+}
+.st-close-button .st-in .st-close-button-block:after {
+  -webkit-transition-delay: 280ms;
+          transition-delay: 280ms;
+  -webkit-transform: translateX(-18px) translateY(-18px) rotate(-45deg);
+          transform: translateX(-18px) translateY(-18px) rotate(-45deg);
+}
+.st-close-button .st-out {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.st-close-button .st-out .st-close-button-block:before {
+  -webkit-transform: translateX(-5px) translateY(5px) rotate(45deg);
+          transform: translateX(-5px) translateY(5px) rotate(45deg);
+}
+.st-close-button .st-out .st-close-button-block:after {
+  -webkit-transform: translateX(5px) translateY(5px) rotate(-45deg);
+          transform: translateX(5px) translateY(5px) rotate(-45deg);
+}
+.st-close-button:hover .st-in .st-close-button-block:before {
+  -webkit-transform: translateX(-5px) translateY(5px) rotate(45deg);
+          transform: translateX(-5px) translateY(5px) rotate(45deg);
+}
+.st-close-button:hover .st-in .st-close-button-block:after {
+  -webkit-transform: translateX(5px) translateY(5px) rotate(-45deg);
+          transform: translateX(5px) translateY(5px) rotate(-45deg);
+}
+.st-close-button:hover .st-out .st-close-button-block:before {
+  -webkit-transform: translateX(-15px) translateY(15px) rotate(45deg);
+          transform: translateX(-15px) translateY(15px) rotate(45deg);
+}
+.st-close-button:hover .st-out .st-close-button-block:after {
+  -webkit-transform: translateX(15px) translateY(15px) rotate(-45deg);
+          transform: translateX(15px) translateY(15px) rotate(-45deg);
+}
+/* end CSS close button by Maneesh, downloaded 20200224 from https://codepen.io/maneeshc/pen/pPxKQm */
+
+
 .scripturetips-content .st-verse-title{
     display: block;
     font-weight: bold;

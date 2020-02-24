@@ -174,7 +174,23 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    foreach(self::$scripture_tips as $scripturetip_unique_key=>$scripture_tip){
 		
 		$tipContent = '<div id="st_'.md5($scripture_tip['pattern']).'" class="scripturetips-content">';
-		$tipContent .= '<h2 class="st-title">'.$scripture_tip['pattern'].' ('.$scripture_tip['version'].')</h2>';
+		
+// CSS close button by Maneesh, downloaded 20200224 from https://codepen.io/maneeshc/pen/pPxKQm
+		$tipContent .= <<<HTML
+<h2 class="st-title">{$scripture_tip['pattern']} {$scripture_tip['version']})			
+<div class="st-close-button-wrapper">
+  <a href="#" class="st-close-button">
+    <div class="st-in">
+      <div class="st-close-button-block"></div>
+      <div class="st-close-button-block"></div>
+    </div>
+    <div class="st-out">
+      <div class="st-close-button-block"></div>
+      <div class="st-close-button-block"></div>
+    </div>
+  </a>
+</div></h2>
+HTML;
 		$tipContent .= '<div class="st-inner-content">';
 		foreach($scripture_tip['rows'] as $rowCount=>$row){
 		    if($row->verse>1 && $rowCount>0){
