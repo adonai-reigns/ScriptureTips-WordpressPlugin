@@ -187,7 +187,7 @@ if(!class_exists('Adonai_Reigns_Life')){
 		    $tipContent .= $verseContent.'</span>';
 		}
 		$tipContent .= '</div>';
-		$tipContent .= '<div class="st-footer">Read more: <a href="https://www.biblegateway.com/passage/?search='.urlencode($scripture_tip['pattern']).'" title="www.biblegateway.com/search='.$scripture_tip['pattern'].' (opens a new window)" target="_blank">www.biblegateway.com/?search='.urlencode(substr($scripture_tip['pattern'], 0, 7)).'&hellip;</a></div>';
+		$tipContent .= '<div class="st-footer">Read more: <a href="https://www.biblegateway.com/passage/?search='.urlencode($scripture_tip['pattern']).'" title="www.biblegateway.com/search='.$scripture_tip['pattern'].' (opens a new window)" target="_blank">www.biblegateway.com/?search='.substr(urlencode($scripture_tip['pattern']), 0, 7).'&hellip;</a></div>';
 		$tipContent .= '</div>';
 		$tipContents[] = $tipContent;
 		$plainContent = preg_replace('/<span class="note([^"]*)">.*<\/span>/U', ' ', $scripture_tip['content']);
