@@ -30,7 +30,13 @@ class Adonai_Reigns_Life_Deactivate
 {
     
     public static function deactivate(){
+	global $wpdb;
+	
 	delete_option('the_gospel_content');
+	delete_option('scripturetips_default_bible_version');
+	
+	$wpdb->query('DROP TABLE '.$wpdb->prefix.'scripturetips_cache');
+	$wpdb->query('DROP TABLE '.$wpdb->prefix.'scripturetips_verses');
 	
     }
     

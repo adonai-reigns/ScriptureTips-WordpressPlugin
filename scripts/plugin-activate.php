@@ -32,6 +32,7 @@ require_once(plugin_dir_path(ADONAI_REIGNS_PLUGIN_FILE) . DIRECTORY_SEPARATOR . 
 class Adonai_Reigns_Life_Activate
 {   
     public static function activate(){
+	Adonai_Reigns_Life_Update::create_database_tables();
 	Adonai_Reigns_Life_Update::force_content_update();
     }
 }

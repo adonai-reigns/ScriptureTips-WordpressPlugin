@@ -33,6 +33,56 @@ class Adonai_Reigns_life_Update
      */
     protected static $auto_update_interval = 86400 * 7;
     
+    
+    public static function create_database_tables(){
+	require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+	
+	global $wpdb;
+
+	$sql = <<<SQL
+CREATE TABLE IF NOT EXISTS {$wpdb->prefix}scripturetips_verses (
+id INT(11) NOT NULL AUTO_INCREMENT,
+version VARCHAR(12) NOT NULL,
+book VARCHAR(16) NOT NULL,
+chapter TINYINT(3) NOT NULL,
+verse TINYINT(3) NOT NULL,
+paragraph TINYINT(3) NOT NULL,
+content TEXT NOT NULL,
+PRIMARY KEY  (id),
+KEY version (version),
+KEY chapter (chapter)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+SQL;
+	
+	dbDelta($sql);
+	
+	$sql = <<<SQL
+CREATE TABLE IF NOT EXISTS {$wpdb->prefix}scripturetips_cache (
+id INT(11) NOT NULL AUTO_INCREMENT,
+pattern VARCHAR(255) NOT NULL,
+content TEXT NOT NULL,
+created_time datetime DEFAULT NOW() NOT NULL,
+PRIMARY KEY  (id),
+KEY pattern (pattern)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+SQL;
+
+	dbDelta($sql);
+	
+	$sql = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'leb-bible.sql');
+	
+	$sql = str_replace('`bible_verses`', $wpdb->prefix.'scripturetips_verses', $sql);
+	
+	$sqls = explode('INSERT INTO', $sql);
+	
+	foreach($sqls as $sql){
+	    if(trim($sql) === ''){continue;}
+	    $wpdb->query('INSERT INTO'.$sql);
+	}
+	
+    }
+    
+    
     /**
      * Force the content to be updated.
      */
@@ -47,6 +97,7 @@ class Adonai_Reigns_life_Update
      * @return type
      */
     public static function auto_content_update($lang = 'en_nz'){
+	global $wpdb;
 	
 	$last_update = get_option('the_gospel_content_'.$lang);
 	
@@ -72,7 +123,7 @@ class Adonai_Reigns_life_Update
 	}
 	
 	// @TODO : they should be able to opt-in to receive updates to the booklet content from the CDN
-	$init_json_encoded = null;
+	$init_json_encoded = $init_json_decoded = null;
 	if(false){
 	    try{
 		$init_json_encoded = @file_get_contents(ADONAI_REIGNS_CDN_URL . DIRECTORY_SEPARATOR . 'content-latest.json');
@@ -104,6 +155,13 @@ class Adonai_Reigns_life_Update
 	
 	}
 	
+	$default_scripturetips_bible_version = get_option('scripturetips_default_bible_version');
+	
+	if($default_scripturetips_bible_version === false){
+	    update_option('scripturetips_default_bible_version', 'LEB');
+	}
+	// clear the cache 
+	$wpdb->query("TRUNCATE {$wpdb->prefix}scripturetips_cache;");
 	
     }
 }

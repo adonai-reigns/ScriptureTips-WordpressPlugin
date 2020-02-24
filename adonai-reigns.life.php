@@ -8,7 +8,7 @@
 /*
 Plugin Name: Adonai Reigns 
 Plugin URI: https://www.adonai-reigns.life/tools/wordpress
-Description: Share The Gospel to visitors of your website!
+Description: Convert Bible References into tooltips :) .. (Includes a shortcode <strong>[the_gospel_booklet]</strong> to share the gospel on your website!).
 Version: 1.0.0
 Author: Serving Zion
 Author URI: http://www.adonai-reigns.life
@@ -50,6 +50,8 @@ if(!class_exists('Adonai_Reigns_Life')){
 	
 	public $pluginBasename;
 	public $pluginSlugname = 'adonai_reigns_life';
+	
+	private static $scripture_tips = array();
 	
 	/**
 	 * These are public hooks for content authors to use
@@ -95,8 +97,106 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    add_action('wp_enqueue_scripts', array('Adonai_Reigns_Life', 'enqueue'));
 	    add_action('admin_menu', array($this, 'add_admin_pages'));
 	    add_filter("plugin_action_links_{$this->pluginBasename}", array($this, 'settings_link'));
+	    add_filter('the_content', array($this, 'create_scripturetips_links'));
 	    
 	}
+	
+	
+	
+	public function create_scripturetips_links($content){
+	    global $wpdb;
+	    
+	    require_once(plugin_dir_path( __FILE__ ).'classes'.DIRECTORY_SEPARATOR.'Adonai_Reigns'.DIRECTORY_SEPARATOR.'Scripturetips'.DIRECTORY_SEPARATOR.'Scripturetips.php');
+	    
+	    $bible_version = get_option('scripturetips_default_bible_version');
+	    
+	    self::$scripture_tips = Adonai_Reigns_Scripturetips::getInstance()->process_scripture_tips($content);
+	    
+	    $scriptures = array();
+	    
+	    foreach(self::$scripture_tips as $scripturetip_unique_key=>$scripture_tip){
+		
+		$scripture_query = Adonai_Reigns_Scripturetips::getInstance()->get_scripture_search_query($scripture_tip['pattern'], $bible_version, $wpdb->prefix.'scripturetips_verses', '`version`, `book`, `chapter`, `verse`, `content`');
+		
+		self::$scripture_tips[$scripturetip_unique_key]['version'] = $bible_version;
+		
+		// perform the query on the cache first
+		$results = $wpdb->get_results("SELECT `content` FROM {$wpdb->prefix}scripturetips_cache WHERE `pattern` = '".$wpdb->_escape($scripture_query)."'");
+		
+		if(count($results) > 0){
+		    
+		    self::$scripture_tips[$scripturetip_unique_key]['rows'] = json_decode($results[0]->content);
+		    
+		    $combinedContent = '';
+		    
+		    foreach(self::$scripture_tips[$scripturetip_unique_key]['rows'] as $row){
+			$combinedContent .= $row->content.' ';
+		    }
+		    
+		    self::$scripture_tips[$scripturetip_unique_key]['content'] = $combinedContent;
+		    
+		}else{
+		    
+		    // this pattern hasn't been indexed yet - let's do that now
+		    $results = $wpdb->get_results($scripture_query);
+		    
+		    if(count($results) > 0){
+			$scripturetip_content_cache = json_encode($results);
+			
+			$combinedContent = '';
+			
+			foreach($results as $row){
+			    $combinedContent .= $row->content.' ';
+			}
+			
+			
+			// add it to the cache for next time
+			$wpdb->query("INSERT INTO {$wpdb->prefix}scripturetips_cache (`pattern`, `content`, `created_time`) VALUES ('".$wpdb->_escape($scripture_query)."', '".$wpdb->_escape($scripturetip_content_cache)."', NOW());");
+		    
+			// store the tooltip content to a global array for print version
+			self::$scripture_tips[$scripturetip_unique_key]['rows'] = json_decode($scripturetip_content_cache);
+			self::$scripture_tips[$scripturetip_unique_key]['content'] = $combinedContent;
+			
+		    }else{
+			
+			// we don't have any available content to make a tooltip for this pattern, remove it
+			unset(self::$scripture_tips[$scripturetip_unique_key]);
+			
+		    }
+		    
+		}
+		
+	    }
+	    
+	    $tipContents = array();
+	    
+	    // now we can create the tooltip links
+	    foreach(self::$scripture_tips as $scripturetip_unique_key=>$scripture_tip){
+		
+		$tipContent = '<div id="st_'.md5($scripture_tip['pattern']).'" class="scripturetips-content">';
+		$tipContent .= '<h2>'.$scripture_tip['pattern'].' ('.$scripture_tip['version'].')</h2>';
+		$tipContent .= '<div class="content">';
+		foreach($scripture_tip['rows'] as $row){
+		    if($row->verse>1){
+			$tipContent .= '<span class="verse"><span class="verse-number">'.$row->verse.'</span>';
+		    }
+		    $tipContent .= $row->content.'</span>';
+		}
+		$tipContent .= '</div>';
+		$tipContent .= '<div class="tip-footer">Read more: <a href="https://www.biblegateway.com/passage/?search='.urlencode($scripture_tip['pattern']).'" title="www.biblegateway.com/search='.$scripture_tip['pattern'].' (opens a new window)" target="_blank">www.biblegateway.com/?search='.urlencode(substr($scripture_tip['pattern'], 0, 7)).'&hellip;</a></div>';
+		$tipContent .= '</div>';
+		$tipContents[] = $tipContent;
+		$plainContent = preg_replace('/<span class="note([^"]*)">.*<\/span>/U', ' ', $scripture_tip['content']);
+		$plainContent = strip_tags($plainContent);
+		
+		$replacement = '<a href="javascript: void(null)" title="'.$plainContent.'" class="scripturetips-tip" data-tooltip-id="st_'.md5($scripture_tip['pattern']).'">'.$scripture_tip['pattern'].'</a>';
+		$content = str_replace($scripture_tip['pattern'], $replacement, $content);
+	    }
+	    
+	    return $content.implode('', $tipContents);
+	}
+	
+	
 	
 	public function replace_content_variables($content){
 	    
@@ -167,12 +267,14 @@ if(!class_exists('Adonai_Reigns_Life')){
 
 	public static function enqueue(){
 	    wp_enqueue_script('jquery');
-//	    wp_enqueue_script('jquery-ui-core');
+	    wp_enqueue_script('jquery-ui-core');
 	    wp_enqueue_script('jquery-ui-draggable');
 	    
+	    wp_enqueue_style('scripturetips', plugins_url('assets/css/scripturetips.css', __FILE__));
 	    wp_enqueue_style('sz-booklet', plugins_url('assets/css/sz-booklet.css', __FILE__));
 	    wp_enqueue_script('sz-booklet', plugins_url('assets/js/sz-booklet.js', __FILE__));
 	    wp_enqueue_script('the-gospel', plugins_url('assets/js/the-gospel.js', __FILE__));
+	    wp_enqueue_script('scripturetips', plugins_url('assets/js/scripturetips.js', __FILE__));
 	}
 
 	public static function activate(){
@@ -184,8 +286,8 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    require_once(plugin_dir_path(__FILE__).'scripts/plugin-deactivate.php');
 	    Adonai_Reigns_Life_Deactivate::deactivate();
 	}
-
-
+	
+	
     }
 
     $adonai_reigns_life_plugin = new Adonai_Reigns_Life();
@@ -194,9 +296,9 @@ if(!class_exists('Adonai_Reigns_Life')){
     $adonai_reigns_life_plugin->register();
     
 
-
+    
     register_activation_hook(__FILE__, array('Adonai_Reigns_Life', 'activate'));
-
+    
     register_deactivation_hook(__FILE__, array('Adonai_Reigns_Life', 'deactivate'));
 
     register_deactivation_hook(__FILE__, array('Adonai_Reigns_Life_Uninstall', 'uninstall'));
