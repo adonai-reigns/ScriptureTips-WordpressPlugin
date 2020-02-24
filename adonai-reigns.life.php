@@ -174,16 +174,20 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    foreach(self::$scripture_tips as $scripturetip_unique_key=>$scripture_tip){
 		
 		$tipContent = '<div id="st_'.md5($scripture_tip['pattern']).'" class="scripturetips-content">';
-		$tipContent .= '<h2>'.$scripture_tip['pattern'].' ('.$scripture_tip['version'].')</h2>';
-		$tipContent .= '<div class="content">';
+		$tipContent .= '<h2 class="st-title">'.$scripture_tip['pattern'].' ('.$scripture_tip['version'].')</h2>';
+		$tipContent .= '<div class="st-inner-content">';
 		foreach($scripture_tip['rows'] as $row){
 		    if($row->verse>1){
-			$tipContent .= '<span class="verse"><span class="verse-number">'.$row->verse.'</span>';
+			$tipContent .= '<span class="st-verse"><span class="st-verse-number">'.$row->verse.'</span>';
 		    }
-		    $tipContent .= $row->content.'</span>';
+		    
+		    // namespace classes
+		    $verseContent = preg_replace('/<span(.*)class="(.*)"/U', '<span$1class="st-$2"', $row->content);
+		    
+		    $tipContent .= $verseContent.'</span>';
 		}
 		$tipContent .= '</div>';
-		$tipContent .= '<div class="tip-footer">Read more: <a href="https://www.biblegateway.com/passage/?search='.urlencode($scripture_tip['pattern']).'" title="www.biblegateway.com/search='.$scripture_tip['pattern'].' (opens a new window)" target="_blank">www.biblegateway.com/?search='.urlencode(substr($scripture_tip['pattern'], 0, 7)).'&hellip;</a></div>';
+		$tipContent .= '<div class="st-footer">Read more: <a href="https://www.biblegateway.com/passage/?search='.urlencode($scripture_tip['pattern']).'" title="www.biblegateway.com/search='.$scripture_tip['pattern'].' (opens a new window)" target="_blank">www.biblegateway.com/?search='.urlencode(substr($scripture_tip['pattern'], 0, 7)).'&hellip;</a></div>';
 		$tipContent .= '</div>';
 		$tipContents[] = $tipContent;
 		$plainContent = preg_replace('/<span class="note([^"]*)">.*<\/span>/U', ' ', $scripture_tip['content']);

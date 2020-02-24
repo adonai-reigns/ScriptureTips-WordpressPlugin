@@ -44,9 +44,6 @@ time, .ar-booklet-wrapper mark, .ar-booklet-wrapper audio, .ar-booklet-wrapper v
 footer, .ar-booklet-wrapper header, .ar-booklet-wrapper hgroup, .ar-booklet-wrapper menu, .ar-booklet-wrapper nav, .ar-booklet-wrapper section{
     display:block;
 }
-body{
-    line-height:1;
-}
 .ar-booklet-wrapper ol, .ar-booklet-wrapper ul{
     list-style:none;
 }

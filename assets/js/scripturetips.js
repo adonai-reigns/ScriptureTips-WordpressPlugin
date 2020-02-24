@@ -37,7 +37,7 @@ var Scripturetips = {
       
       // resize the container to fit the content, remove scrollbars if needed
       var innerSize = {};
-      innerSize.height = ($('h2', tipContent).outerHeight()*1 + $('.content', tipContent).outerHeight()*1 + $('.tip-footer', tipContent).outerHeight()*1);
+      innerSize.height = ($('h2', tipContent).outerHeight()*1 + $('.st-inner-content', tipContent).outerHeight()*1 + $('.st-footer', tipContent).outerHeight()*1);
       
       if(tipContent.height() > innerSize.height){
         tipContent.css({
