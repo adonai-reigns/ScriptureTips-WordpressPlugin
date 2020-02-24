@@ -12,7 +12,7 @@ Tooltip content is stored in the database, and database queries are cached for f
 
 # Share the Gospel with your Visitors!
 
-Simply place the shortcode [the_gospel_booklet] anywhere in your Wordpress website, and a digital booklet will appear:
+Simply place the shortcode [the_gospel_booklet] anywhere in your Wordpress website, and a [digital booklet](https://www.adonai-reigns.life/the-gospel) will appear:
 
 ![My sheep hear my voice](/assets/the-gospel/cover-butterfly-front.jpg?raw=true)
 
