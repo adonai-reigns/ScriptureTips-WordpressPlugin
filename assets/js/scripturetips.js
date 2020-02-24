@@ -31,18 +31,18 @@ var Scripturetips = {
         });
       }
       
-      var tipContentLeftPos = $(e.target).offset().left+'px';
+      var tipContentLeftPos = $(e.target).offset().left;
       
       // position the tooltip within the width of the page
-      if(tipContent.outerWidth() + tipContent.offset().left > $(window).width()){
+      if(tipContent.outerWidth() + tipContentLeftPos > $(window).width()){
         // the box has slid off the page
         
         // will it fit on the page?
         if(tipContent.outerWidth() < $(window).width()){
           // yes, let's move it to the left
-          tipContent.css({
-            left: $(window).width() - (tipContent.outerWidth() + $(e.target).outerHeight()) + 'px'
-          })
+          
+          tipContentLeftPos = $(window).width() - (tipContent.outerWidth() + $(e.target).outerHeight());
+          
         }else{
           // no, the tooltip content will not fit on the page, we need to reduce its width
           
@@ -52,7 +52,7 @@ var Scripturetips = {
             newWidth--;
           }
           
-          tipContentLeftPos = $(window).width() - (newWidth + $(e.target).outerHeight()*1) + 'px';
+          tipContentLeftPos = $(window).width() - (newWidth + $(e.target).outerHeight()*1);
           
         }
         
@@ -60,7 +60,7 @@ var Scripturetips = {
       
       tipContent.fadeIn().css({
         top: $(e.target).offset().top + $(e.target).height() + 'px',
-        left: tipContentLeftPos,
+        left: tipContentLeftPos + 'px',
         zIndex: 1000
       });
       
