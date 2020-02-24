@@ -10,6 +10,8 @@ Tooltip content is stored in the database, and database queries are cached for f
 
 # Share the Gospel with your Visitors!
 
-Simply place the shortcode [the_gospel_booklet] anywhere in your Wordpress website, and a digital booklet will appear that visitors can read and learn the basics of the gospel of Jesus Christ!
+Simply place the shortcode [the_gospel_booklet] anywhere in your Wordpress website, and a digital booklet will appear:
 
 ![My sheep hear my voice](/assets/the-gospel/cover-butterfly-front.jpg?raw=true)
+
+Let your visitors read and learn the basics of the gospel of Jesus Christ!
