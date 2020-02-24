@@ -26,6 +26,9 @@ var Scripturetips = {
         var note = notes[i];
         $(note).prop('title', $(note).text());
         $(note).text('*');
+        $(note).click(function(){
+          alert($(this).prop('title'));
+        });
       }
       
       var tipContentLeftPos = $(e.target).offset().left+'px';
