@@ -34,12 +34,42 @@ var Scripturetips = {
         $(note).text('*');
       }
       
+      var tipContentLeftPos = $(e.target).offset().left+'px';
+      
+      // position the tooltip within the width of the page
+      if(tipContent.outerWidth() + tipContent.offset().left > $(window).width()){
+        // the box has slid off the page
+        
+        // will it fit on the page?
+        if(tipContent.outerWidth() < $(window).width()){
+          // yes, let's move it to the left
+          tipContent.css({
+            left: $(window).width() - (tipContent.outerWidth() + $(e.target).outerHeight()) + 'px'
+          })
+        }else{
+          // no, the tooltip content will not fit on the page, we need to reduce its width
+          
+          var newWidth = tipContent.outerWidth();
+          
+          while(newWidth + $(e.target).outerHeight() * 2 > $(window).width() && newWidth > 0){
+            newWidth--;
+          }
+          
+          tipContentLeftPos = $(window).width() - (newWidth + $(e.target).outerHeight()*1) + 'px';
+          
+        }
+        
+      }
+      
       tipContent.fadeIn().css({
-        width: '300px',
-        height: '180px',
         top: $(e.target).offset().top + $(e.target).height() + 'px',
-        left: $(e.target).offset().left,
+        left: tipContentLeftPos,
         zIndex: 1000
+      });
+      
+      tipContent.css({
+        minWidth: newWidth+'px',
+        width: newWidth+'px'
       });
       
       Scripturetips.currentTip[$(e.target).data('tooltipId')] = e.target;
