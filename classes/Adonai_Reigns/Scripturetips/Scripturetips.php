@@ -103,6 +103,7 @@ class Adonai_Reigns_Scripturetips
 	    $bookName = substr($bookName, 2);
 	    
 	    $bookNameSearch = "/({$bookNumber}\s{$bookName}\s[0-9]{1,3}[a-zA-Z]?[^a-zA-Z\.\,\(\)<]*+)/isU";
+	    
 	
 	}else{
 	    // it's a book name with no numeric prefix
@@ -148,11 +149,10 @@ class Adonai_Reigns_Scripturetips
 	
 	
 	// adapt book name for db selector
-	$bookNameSelector = str_replace(array_values($this->nameTokens), array_keys($this->nameTokens), strtolower($bookName));
+	$bookNameSelector = str_replace(array_values($this->nameTokens), array_keys($this->nameTokens), $bookName);
 	
 	// prepare a uniform sql query
-	$bookNameSelector = str_replace(' ', '_', $bookNameSelector);
-	$bookNameSelector = str_replace('song_of_songs', 'songs', $bookNameSelector);
+	$bookNameSelector = str_ireplace('Song of Songs', 'Song of Solomon', $bookNameSelector);
 	
 	if(strpos($range, '-') !== false){
 	    // it's a range
