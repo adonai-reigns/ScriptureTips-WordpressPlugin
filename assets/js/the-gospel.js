@@ -62,8 +62,30 @@ var ARGospel = {
         
         var viewport = [];
         if(!ARGospel._options.fullscreen){
+          
+          
+          
           viewport.viewportWidth = $(ARGospel._containerHandler).width();
           viewport.viewportHeight = $(ARGospel._containerHandler).height();
+          
+          // shrink the booklet to fit within the page size
+          if(viewport.viewportWidth > $(window).width()){
+            var newWidth = $(window).width();
+            viewport.viewportHeight = Math.floor(viewport.viewportHeight * newWidth/viewport.viewportWidth);
+            viewport.viewportWidth = newWidth;
+          }
+          
+          if(viewport.viewportWidthHeight > $(window).height()){
+            var newHeight = $(window).height();
+            viewport.viewportWidth = Math.floor(viewport.viewportWidth * newHeight/viewport.viewportHeight);
+            viewport.viewportHeight = newHeight;
+          }
+          
+          $(ARGospel._containerHandler).css({
+            width: newWidth+'px',
+            height: newHeight+'px'
+          });
+          
         }
 
         ARGospel._szBooklet = $('.ar-booklet', ARGospel._containerHandler).szBooklet({
