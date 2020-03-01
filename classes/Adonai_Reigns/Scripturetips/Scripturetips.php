@@ -102,12 +102,12 @@ class Adonai_Reigns_Scripturetips
 	    $bookNumber = substr($bookName, 0, 1);
 	    $bookName = substr($bookName, 2);
 	    
-	    $bookNameSearch = "/({$bookNumber}\s{$bookName}\s[0-9]{1,3}[a-zA-Z]?[^a-zA-Z\.\,\(\)<]*+)/isU";
+	    $bookNameSearch = "/({$bookNumber}\s{$bookName}\s[0-9]{1,3}[a-zA-Z]?[^a-zA-Z\.\,\(\)<\s]*+)/isU";
 	    
 	
 	}else{
 	    // it's a book name with no numeric prefix
-	    $bookNameSearch = "/({$bookName}\s[0-9]{1,3}[a-zA-Z]?[^a-zA-Z\.\,\(\)<]*+)/isU";
+	    $bookNameSearch = "/({$bookName}\s[0-9]{1,3}[a-zA-Z]?[^a-zA-Z\.\,\(\)<\s]*+)/isU";
 	    
 	}
 	
@@ -234,6 +234,8 @@ class Adonai_Reigns_Scripturetips
 
 	    // now we have a list of all the patterns that are found in the text
 	    foreach($foundMatches[1] as $k=>$match){
+		// prevent links from wrapping any punctuation at the end
+		$match = preg_replace('/(.*)[^0-9a-zA-Z]*$/U', '$1', $match);
 		
 		// we will pass back each matching pattern
 		$uniqueKey = md5($match);
