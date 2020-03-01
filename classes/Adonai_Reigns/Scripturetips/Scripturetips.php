@@ -127,9 +127,10 @@ class Adonai_Reigns_Scripturetips
     public function get_scripture_search_query($pattern, $version='KJV', $tablename='verses', $columnNames='*'){
 	
 	$bookName = null;
+	$internalPattern = str_replace(array_keys($this->nameTokens), array_values($this->nameTokens), $pattern);
 	
 	foreach (array_merge($this->old, $this->new) as $k=>$v){
-	    if(strpos($pattern, $v) === 0){
+	    if(strpos($internalPattern, $v) === 0){
 		// found the book!
 		$bookName = $v;
 		break;
@@ -142,7 +143,7 @@ class Adonai_Reigns_Scripturetips
 	}
 	
 	// extract the chapter/verse range from the search pattern
-	$range = str_replace($bookName, '', $pattern);
+	$range = str_replace($bookName, '', $internalPattern);
 	
 	// strip all whitespace from the chapter/verse range
 	$range = preg_replace('/\s/', '', $range);
@@ -202,8 +203,7 @@ class Adonai_Reigns_Scripturetips
 	    }
 	    
 	    $sql = "SELECT {$columnNames} FROM `{$tablename}` WHERE `book` = '{$bookNameSelector}' AND `version` = '{$version}' "
-	    . "AND (`chapter` >= '{$chpStart}' AND `verse` >= '{$verseStart}') "
-	    . "AND (`chapter` <= '{$chpEnd}' AND `verse` <= '{$verseEnd}') "
+	    . "AND (`chapter` = '{$chpStart}' AND `verse` = '{$verseStart}') "
 	    . "ORDER BY `chapter` ASC, `verse` ASC";
 	    
 	}
@@ -236,13 +236,13 @@ class Adonai_Reigns_Scripturetips
 	    foreach($foundMatches[1] as $k=>$match){
 		
 		// we will pass back each matching pattern
-		$pattern = str_replace(array_values($this->nameTokens), array_keys($this->nameTokens), $match);
-		$uniqueKey = md5($pattern);
+		$uniqueKey = md5($match);
 		
 		$scriptureTips[$uniqueKey] = array(
 		    'search' => $bookNameSearch,
-		    'pattern' => $pattern,
-		    'bookname' => $bookName,
+		    'search_pattern' => $match,
+		    'pattern' => str_replace(array_values($this->nameTokens), array_keys($this->nameTokens), $match),
+		    'bookname' => str_replace(array_values($this->nameTokens), array_keys($this->nameTokens), $bookName),
 		    'key' => $uniqueKey
 		);
 		
@@ -250,7 +250,10 @@ class Adonai_Reigns_Scripturetips
 	    
 	}
 	
-	return $scriptureTips;
+	return array(
+	    'scripturetips' => $scriptureTips,
+	    'content' => $str
+	);
 
     }
     

@@ -114,26 +114,28 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    
 	    $scriptures = array();
 	    
-	    foreach(self::$scripture_tips as $scripturetip_unique_key=>$scripture_tip){
+	    foreach(self::$scripture_tips['scripturetips'] as $scripturetip_unique_key=>$scripture_tip){
 		
 		$scripture_query = Adonai_Reigns_Scripturetips::getInstance()->get_scripture_search_query($scripture_tip['pattern'], $bible_version, $wpdb->prefix.'scripturetips_verses', '`version`, `book`, `chapter`, `verse`, `content`');
 		
 		self::$scripture_tips[$scripturetip_unique_key]['version'] = $bible_version;
+		
+		self::$scripture_tips['scripturetips'][$scripturetip_unique_key]['version'] = $bible_version;
 		
 		// perform the query on the cache first
 		$results = $wpdb->get_results("SELECT `content` FROM {$wpdb->prefix}scripturetips_cache WHERE `pattern` = '".$wpdb->_escape($scripture_query)."'");
 		
 		if(count($results) > 0){
 		    
-		    self::$scripture_tips[$scripturetip_unique_key]['rows'] = json_decode($results[0]->content);
+		    self::$scripture_tips['scripturetips'][$scripturetip_unique_key]['rows'] = json_decode($results[0]->content);
 		    
 		    $combinedContent = '';
 		    
-		    foreach(self::$scripture_tips[$scripturetip_unique_key]['rows'] as $row){
+		    foreach(self::$scripture_tips['scripturetips'][$scripturetip_unique_key]['rows'] as $row){
 			$combinedContent .= $row->content.' ';
 		    }
 		    
-		    self::$scripture_tips[$scripturetip_unique_key]['content'] = $combinedContent;
+		    self::$scripture_tips['scripturetips'][$scripturetip_unique_key]['content'] = $combinedContent;
 		    
 		}else{
 		    
@@ -154,13 +156,13 @@ if(!class_exists('Adonai_Reigns_Life')){
 			$wpdb->query("INSERT INTO {$wpdb->prefix}scripturetips_cache (`pattern`, `content`, `created_time`) VALUES ('".$wpdb->_escape($scripture_query)."', '".$wpdb->_escape($scripturetip_content_cache)."', NOW());");
 		    
 			// store the tooltip content to a global array for print version
-			self::$scripture_tips[$scripturetip_unique_key]['rows'] = json_decode($scripturetip_content_cache);
-			self::$scripture_tips[$scripturetip_unique_key]['content'] = $combinedContent;
+			self::$scripture_tips['scripturetips'][$scripturetip_unique_key]['rows'] = json_decode($scripturetip_content_cache);
+			self::$scripture_tips['scripturetips'][$scripturetip_unique_key]['content'] = $combinedContent;
 			
 		    }else{
 			
 			// we don't have any available content to make a tooltip for this pattern, remove it
-			unset(self::$scripture_tips[$scripturetip_unique_key]);
+			unset(self::$scripture_tips['scripturetips'][$scripturetip_unique_key]);
 			
 		    }
 		    
@@ -171,7 +173,7 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    $tipContents = array();
 	    
 	    // now we can create the tooltip links
-	    foreach(self::$scripture_tips as $scripturetip_unique_key=>$scripture_tip){
+	    foreach(self::$scripture_tips['scripturetips'] as $scripturetip_unique_key=>$scripture_tip){
 		
 		$tipContent = '<div id="st_'.md5($scripture_tip['pattern']).'" class="scripturetips-content">';
 		
@@ -210,10 +212,11 @@ HTML;
 		$plainContent = strip_tags($plainContent);
 		
 		$replacement = '<a href="javascript: void(null)" title="'.$plainContent.'" class="scripturetips-tip" data-tooltip-id="st_'.md5($scripture_tip['pattern']).'">'.$scripture_tip['pattern'].'</a>';
-		$content = str_replace($scripture_tip['pattern'], $replacement, $content);
+		
+		self::$scripture_tips['content'] = str_replace($scripture_tip['search_pattern'], $replacement, self::$scripture_tips['content']);
 	    }
 	    
-	    return $content.implode('', $tipContents);
+	    return self::$scripture_tips['content'].implode('', $tipContents);
 	}
 	
 	
