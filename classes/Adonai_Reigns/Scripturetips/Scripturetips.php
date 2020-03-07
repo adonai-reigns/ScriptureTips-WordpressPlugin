@@ -231,7 +231,11 @@ class Adonai_Reigns_Scripturetips
 	    $bookNameSearch = $this->create_book_name_search($bookName);
 
 	    preg_match_all($bookNameSearch, $str, $foundMatches);
-
+	    
+	    usort($foundMatches[1], function($a, $b){
+		return strlen($b) - strlen($a);
+	    });
+	    
 	    // now we have a list of all the patterns that are found in the text
 	    foreach($foundMatches[1] as $k=>$match){
 		// prevent links from wrapping any punctuation at the end
@@ -241,6 +245,7 @@ class Adonai_Reigns_Scripturetips
 		$uniqueKey = md5($match);
 		
 		$scriptureTips[$uniqueKey] = array(
+		    'sorting' => count($scriptureTips),
 		    'search' => $bookNameSearch,
 		    'search_pattern' => $match,
 		    'pattern' => str_replace(array_values($this->nameTokens), array_keys($this->nameTokens), $match),
@@ -251,6 +256,10 @@ class Adonai_Reigns_Scripturetips
 	    }
 	    
 	}
+	
+	usort($scriptureTips, function($a, $b){
+	    return $a['sorting'] - $b['sorting'];
+	});
 	
 	return array(
 	    'scripturetips' => $scriptureTips,

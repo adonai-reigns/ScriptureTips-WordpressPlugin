@@ -9,7 +9,7 @@
 Plugin Name: Adonai Reigns 
 Plugin URI: https://www.adonai-reigns.life/tools/wordpress
 Description: Convert Bible References into tooltips :) .. (Includes a shortcode <strong>[the_gospel_booklet]</strong> to share the gospel on your website!).
-Version: 1.0.3
+Version: 1.0.4
 Author: Serving Zion
 Author URI: http://www.adonai-reigns.life
 License: GPLv2 or later
@@ -173,6 +173,10 @@ if(!class_exists('Adonai_Reigns_Life')){
 	    $tipContents = array();
 	    
 	    // now we can create the tooltip links
+	    
+	    // replace references with a token to avoid double-processing links
+	    $patternTokens = array();
+	    
 	    foreach(self::$scripture_tips['scripturetips'] as $scripturetip_unique_key=>$scripture_tip){
 		
 		$tipContent = '<div id="st_'.md5($scripture_tip['pattern']).'" class="scripturetips-content">';
@@ -211,10 +215,20 @@ HTML;
 		$plainContent = preg_replace('/<span class="note([^"]*)">.*<\/span>/U', ' ', $scripture_tip['content']);
 		$plainContent = strip_tags($plainContent);
 		
-		$replacement = '<a href="javascript: void(null)" title="'.$plainContent.'" class="scripturetips-tip" data-tooltip-id="st_'.md5($scripture_tip['pattern']).'">'.$scripture_tip['pattern'].'</a>';
+		$pattern_token = md5($scripture_tip['pattern']);
 		
-		self::$scripture_tips['content'] = str_replace($scripture_tip['search_pattern'], $replacement, self::$scripture_tips['content']);
+		$replacement = '<a href="javascript: void(null)" title="'.$plainContent.'" class="scripturetips-tip" data-tooltip-id="st_'.$pattern_token.'">'.$scripture_tip['pattern'].'</a>';
+		
+		$patternTokens[$pattern_token] = $replacement;
+		
+		self::$scripture_tips['content'] = str_replace($scripture_tip['search_pattern'], $pattern_token, self::$scripture_tips['content']);
 	    }
+	    
+	    // replace the tokens with the links now
+	    foreach($patternTokens as $tokenKey => $tokenValue){
+		self::$scripture_tips['content'] = str_replace($tokenKey, $tokenValue, self::$scripture_tips['content']);
+	    }
+	    
 	    
 	    return self::$scripture_tips['content'].implode('', $tipContents);
 	}
