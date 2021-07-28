@@ -1,4 +1,4 @@
-# Adonai-Reigns
+# Adonai-Reigns Wordpress Plugin
 
 A Wordpress plugin to enhance websites that reference bible quotes often.
 
